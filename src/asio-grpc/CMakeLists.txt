@@ -4,11 +4,11 @@ project(test-asio-grpc)
 
 # find_package(protobuf CONFIG) 
 # find_package(Boost CONFIG) 
-# find_package(gRPC CONFIG)
+# find_package(gRPC CONFIG REQUIRED)
 # include(FindPkgConfig)
 # pkg_search_module(gRPC REQUIRED IMPORTED_TARGET grpc++)
 # set(ASIO_GRPC_DISABLE_AUTOLINK on)
-find_package(asio CONFIG REQUIRED)
+# find_package(asio CONFIG REQUIRED)
 find_package(asio-grpc CONFIG REQUIRED)
 
 # protobuf_generate_cpp(PROTO_SRCS PROTO_HDRS src/helloworld.proto) target_sources(test PRIVATE main.cpp
@@ -18,7 +18,7 @@ find_package(asio-grpc CONFIG REQUIRED)
 # add_library(std::coroutines ALIAS coroutines)
 
 add_executable(test-asio-grpc main.cpp) 
-target_link_libraries(test-asio-grpc PRIVATE asio-grpc::asio-grpc-standalone-asio gRPC::grpc++ )
+target_link_libraries(test-asio-grpc PRIVATE asio-grpc::asio-grpc-standalone-asio)
 
 asio_grpc_protobuf_generate(
     GENERATE_GRPC

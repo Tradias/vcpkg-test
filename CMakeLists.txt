@@ -4,8 +4,9 @@ project(test-vcpkg)
 
 set(PROTO_DIR "${CMAKE_CURRENT_LIST_DIR}/proto")
 
-# add_subdirectory(src/asio-grpc)
-add_subdirectory(src/opentelemetry)
+add_subdirectory(src/asio-grpc)
+# add_subdirectory(src/opentelemetry)
+# add_subdirectory(src/gz)
 
 # vcpkg commands: vcpkg format-manifest --all || vcpkg x-add-version --all
 # https://github.com/microsoft/vcpkg/blob/master/docs/maintainers/maintainer-guide.md
