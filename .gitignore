@@ -31,6 +31,8 @@
 *.out
 *.app
 
+**build**
+
 CMakeUserPresets.json
 .clangd
 .vscode

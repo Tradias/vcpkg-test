@@ -3,11 +3,10 @@
     "name": "test",
     "version": "0.1.0",
     "dependencies": [
-        "boost-asio",
-        "asio-grpc",
         {
-            "name": "opentelemetry-cpp",
-            "features": ["otlp-grpc"]
-        }
+            "name": "abseil",
+            "features": ["cxx17"]
+        },
+        "ecal"
     ]
 }
