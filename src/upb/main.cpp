@@ -2,7 +2,7 @@
 #include "helloWorld.upb.h"
 #include "helloWorld.upbdefs.h"
 
-#include <upb/upb.hpp>
+#include <upb/mem/arena.hpp>
 // #include <utf8_validity.h>
 
 #include <cassert>

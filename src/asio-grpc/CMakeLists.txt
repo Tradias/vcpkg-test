@@ -8,7 +8,7 @@ project(test-asio-grpc)
 # include(FindPkgConfig)
 # pkg_search_module(gRPC REQUIRED IMPORTED_TARGET grpc++)
 # set(ASIO_GRPC_DISABLE_AUTOLINK on)
-# find_package(asio CONFIG REQUIRED)
+find_package(asio CONFIG REQUIRED)
 find_package(asio-grpc CONFIG REQUIRED)
 
 # protobuf_generate_cpp(PROTO_SRCS PROTO_HDRS src/helloworld.proto) target_sources(test PRIVATE main.cpp

@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 3.15...3.23)
 
 project(test-protobuf)
 
-find_package(protobuf CONFIG)
+find_package(Protobuf REQUIRED)
 
 add_executable(test-protobuf main.cpp)
 target_link_libraries(test-protobuf PRIVATE protobuf::libprotobuf)

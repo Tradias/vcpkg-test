@@ -1,5 +1,7 @@
+#include "helloWorld.pb.h"
 
 int main()
 {
-    return 0;
+    helloworld::HelloRequest request;
+    return request.a().size();
 }
