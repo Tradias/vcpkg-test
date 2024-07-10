@@ -1,3 +1,4 @@
+find_package(hdf5 CONFIG REQUIRED)
 find_package(Shogun CONFIG REQUIRED)
 find_package(Protobuf CONFIG)
 find_package(spdlog CONFIG)

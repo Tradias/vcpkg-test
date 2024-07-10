@@ -1,4 +1,4 @@
-#include "google/protobuf/descriptor.upb.h"
+// #include "google/protobuf/descriptor.upb.h"
 #include "helloWorld.upb.h"
 #include "helloWorld.upbdefs.h"
 

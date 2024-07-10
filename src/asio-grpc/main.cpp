@@ -21,6 +21,7 @@
 #include <asio/detached.hpp>
 
 #include <vector>
+#include <thread>
 
 //
 // #include <boost/asio/bind_executor.hpp>
