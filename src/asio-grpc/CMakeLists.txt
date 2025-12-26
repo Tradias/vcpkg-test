@@ -2,12 +2,13 @@ cmake_minimum_required(VERSION 3.23)
 
 project(test-asio-grpc)
 
-# find_package(protobuf CONFIG) 
+# find_package(flatbuffers CONFIG) 
 # find_package(Boost CONFIG) 
 # find_package(gRPC CONFIG REQUIRED)
 # include(FindPkgConfig)
 # pkg_search_module(gRPC REQUIRED IMPORTED_TARGET grpc++)
 # set(ASIO_GRPC_DISABLE_AUTOLINK on)
+# find_package(OpenSSL CONFIG REQUIRED)
 find_package(asio CONFIG REQUIRED)
 find_package(asio-grpc CONFIG REQUIRED)
 
@@ -18,13 +19,23 @@ find_package(asio-grpc CONFIG REQUIRED)
 # add_library(std::coroutines ALIAS coroutines)
 
 add_executable(test-asio-grpc main.cpp) 
-target_link_libraries(test-asio-grpc PRIVATE asio-grpc::asio-grpc-standalone-asio)
+target_link_libraries(test-asio-grpc PRIVATE asio-grpc::asio-grpc-standalone-asio )
+# flatbuffers::flatbuffers)
+
+target_include_directories(test-asio-grpc PRIVATE "${CMAKE_CURRENT_BINARY_DIR}")
+
+# add_custom_command(OUTPUT
+#  "${CMAKE_CURRENT_BINARY_DIR}/greeter_generated.h" 
+#  "${CMAKE_CURRENT_BINARY_DIR}/greeter.grpc.fb.cc" 
+#  "${CMAKE_CURRENT_BINARY_DIR}/greeter.grpc.fb.h" 
+#  COMMAND flatbuffers::flatc --grpc --cpp "${CMAKE_CURRENT_LIST_DIR}/greeter.fbs" MAIN_DEPENDENCY greeter.fbs WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR})
+# target_sources(test-asio-grpc PRIVATE "${CMAKE_CURRENT_BINARY_DIR}/greeter.grpc.fb.cc")
 
 asio_grpc_protobuf_generate(
     GENERATE_GRPC
     TARGET test-asio-grpc
     OUT_DIR "${CMAKE_CURRENT_BINARY_DIR}/generated"
-    PROTOS "${PROTO_DIR}/helloWorld.proto" "${PROTO_DIR}/messages.proto")
+    PROTOS "${PROTO_DIR}/helloWorld.proto" "${PROTO_DIR}/messages.proto" "${PROTO_DIR}/grpc/health/v1/health.proto" )
 
 # protobuf_generate(
 #     TARGET test-asio-grpc

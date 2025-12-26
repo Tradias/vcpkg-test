@@ -4,8 +4,10 @@ project(test-protobuf)
 
 find_package(Protobuf REQUIRED)
 
-add_executable(test-protobuf main.cpp)
+add_executable(test-protobuf main.cpp protobuf.natvis)
 target_link_libraries(test-protobuf PRIVATE protobuf::libprotobuf)
+
+target_compile_options(test-protobuf PRIVATE $<$<CXX_COMPILER_ID:MSVC>:/permissive-> $<$<CXX_COMPILER_ID:MSVC>:/Zc:preprocessor>)
 
 # protobuf_generate_cpp(PROTO_SRCS PROTO_HDRS src/helloworld.proto)
 protobuf_generate(

@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<AutoVisualizer xmlns="http://schemas.microsoft.com/vstudio/debugger/natvis/2010">
+  <Type Name="google::protobuf::RepeatedField&lt;*&gt;">
+    <DisplayString>{{ size={this->size_} }}</DisplayString>
+    <Expand>
+      <Item Name="[size]" ExcludeView="simple">size_</Item>
+      <Item Name="[capacity]" ExcludeView="simple">capacity_</Item>
+      <ArrayItems Condition="size_ != 0">
+        <Size>size_</Size>
+        <ValuePointer>($T1*)arena_or_elements_</ValuePointer>
+      </ArrayItems>
+    </Expand>
+  </Type>
+  <Type Name="google::protobuf::RepeatedPtrField&lt;*&gt;">
+	  <Intrinsic Name="sso" Expression="(unsigned long long)this->tagged_rep_or_elem_ &amp; 1 == 0" />
+    <DisplayString>{{ size={this->current_size_} }}</DisplayString>
+    <Expand>
+      <Item Name="[size]" ExcludeView="simple">this->current_size_</Item>
+		<Item Name="[capacity]" ExcludeView="simple" Condition="sso()">this->capacity_proxy_ + 1 /*kSSOCapacity*/</Item>
+		<Item Name="[capacity]" ExcludeView="simple" Condition="!sso()">this->capacity_proxy_</Item>
+      <ArrayItems Condition="this->tagged_rep_or_elem_ != 0">
+        <Size>this->current_size_</Size>
+		  <ValuePointer Condition="sso()">($T1*)this->tagged_rep_or_elem_</ValuePointer>
+		  <ValuePointer Condition="!sso()">($T1**)((unsigned long long)this->tagged_rep_or_elem_ &amp; ~1) + 1</ValuePointer>
+      </ArrayItems>
+    </Expand>
+  </Type>
+	<Type Name="google::protobuf::internal::TaggedStringPtr">
+		<DisplayString Condition="((unsigned long long)ptr_ &amp; 2 /*kAllocated*/) == 0">null</DisplayString>
+		<DisplayString Condition="((unsigned long long)ptr_ &amp; 2 /*kAllocated*/) == 2">{(std::string*)((unsigned long long)ptr_ &amp; ~3)}</DisplayString>
+		<!--<StringView Condition="(unsigned long)this->tagged_ptr_->ptr_ &amp; 2 /*kAllocated*/ == 0">(std::string*)this->tagged_ptr_->ptr_,[1]</StringView>-->
+		<Expand>
+			<Item Name="[string]" ExcludeView="simple" Condition="((unsigned long long)ptr_ &amp; 2 /*kAllocated*/) == 2">(std::string*)((unsigned long long)ptr_ &amp; ~3)</Item>
+			<!--	<ArrayItems>
+				<Size>size()</Size>
+				<ValuePointer>data()</ValuePointer>
+			</ArrayItems>-->
+			</Expand>
+	</Type>
+	<!--<Type Name="google::protobuf::Map&lt;*&gt;">
+    <DisplayString>{{size={elements_->num_elements_}}}</DisplayString>
+    <Expand>
+      <CustomListItems MaxItemsPerView="5000" ExcludeView="Test">
+
+        <Variable Name="iBucket" InitialValue="elements_->index_of_first_non_null_" />
+        <Variable Name="pBucket" InitialValue="elements_->table_ == nullptr ? nullptr : ((InnerMap::Node**)elements_->table_)[elements_->index_of_first_non_null_]" />
+        <Variable Name="iBucketIncrement" InitialValue="-1" />
+
+        <Size>elements_->num_elements_</Size>
+        <Loop>
+          <If Condition="pBucket == nullptr">
+            <Exec>iBucket++</Exec>
+            <Exec>iBucketIncrement = __findnonnull(((InnerMap::Node**)elements_->table_) + iBucket, elements_->num_buckets_ - iBucket)</Exec>
+            <Break Condition="iBucketIncrement == -1" />
+            <Exec>iBucket += iBucketIncrement</Exec>
+            <Exec>pBucket = ((InnerMap::Node**)elements_->table_)[iBucket]</Exec>
+          </If>
+          <Item>(((InnerMap::Node*)pBucket)->kv.v_)</Item>
+          <Exec>pBucket = pBucket->next</Exec>
+        </Loop>
+      </CustomListItems>
+    </Expand>
+  </Type>
+  -->
+</AutoVisualizer>

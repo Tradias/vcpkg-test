@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 3.15...3.23)
 
 project(test-upb)
 
-find_package(protobuf CONFIG)
+find_package(protobuf CONFIG REQUIRED)
 find_package(upb CONFIG REQUIRED)
 # find_package(utf8_range CONFIG REQUIRED)
 

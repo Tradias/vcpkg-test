@@ -15,6 +15,7 @@
 #include "helloWorld.grpc.pb.h"
 
 #include <agrpc/asio_grpc.hpp>
+#include <agrpc/health_check_service.hpp>
 #include <grpcpp/server_builder.h>
 // #include <grpcpp/ext/proto_server_reflection_plugin.h>
 
@@ -46,6 +47,7 @@ int main(int argc, const char** argv)
     helloworld::Greeter::AsyncService service;
     builder.AddListeningPort(std::string{host}, grpc::InsecureServerCredentials());
     builder.RegisterService(&service);
+    agrpc::add_health_check_service(builder);
     std::vector<std::unique_ptr<grpc::ServerCompletionQueue>> queues;
     for (size_t i = 0; i < thread_count; ++i)
     {
@@ -60,6 +62,10 @@ int main(int argc, const char** argv)
             [&, i]
             {
                 agrpc::GrpcContext grpc_context{std::move(queues[i])};
+                if (i == 0)
+                {
+                    agrpc::start_health_check_service(*server, grpc_context);
+                }
                 auto e = grpc_context.get_executor();
                 auto a = grpc_context.get_allocator();
                 // boost::container::pmr::polymorphic_allocator<int>c{};
